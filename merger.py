@@ -31,35 +31,35 @@ if __name__ == "__main__":
     sess = create_session(github_token)
     event_data = json.load(open(event_path))
     print(f"--- event_data: {event_data}")
-
-    check_suite = event_data["check_suite"]
-    status = check_suite["status"]
-
-    if status != "completed":
-        print(f"*** Check run has not completed")
-        sys.exit(78)
-
-    assert len(check_suite["pull_requests"]) == 1
-    pull_request = check_suite["pull_requests"][0]
-    pr_number = pull_request["number"]
-    pr_src = pull_request["head"]["ref"]
-    pr_dst = pull_request["base"]["ref"]
-
-    print(f"*** Checking pull request #{pr_number}: {pr_src} ~> {pr_dst}")
-
-    pr_data = sess.get(pull_request["url"]).json()
-
-    pr_title = pr_data["title"]
-    print(f"*** Title of PR is {pr_title!r}")
-    if pr_title.startswith("[WIP] "):
-        print("*** This is a WIP PR, will not merge")
-        sys.exit(78)
-
-    pr_user = pr_data["user"]["login"]
-    print(f"*** This pull request was opened by {pr_user}")
-    sys.exit(78)
-
-    print("*** This pull request is ready to be merged.")
+    #
+    # check_suite = event_data["check_suite"]
+    # status = check_suite["status"]
+    #
+    # if status != "completed":
+    #     print(f"*** Check run has not completed")
+    #     sys.exit(78)
+    #
+    # assert len(check_suite["pull_requests"]) == 1
+    # pull_request = check_suite["pull_requests"][0]
+    # pr_number = pull_request["number"]
+    # pr_src = pull_request["head"]["ref"]
+    # pr_dst = pull_request["base"]["ref"]
+    #
+    # print(f"*** Checking pull request #{pr_number}: {pr_src} ~> {pr_dst}")
+    #
+    # pr_data = sess.get(pull_request["url"]).json()
+    #
+    # pr_title = pr_data["title"]
+    # print(f"*** Title of PR is {pr_title!r}")
+    # if pr_title.startswith("[WIP] "):
+    #     print("*** This is a WIP PR, will not merge")
+    #     sys.exit(78)
+    #
+    # pr_user = pr_data["user"]["login"]
+    # print(f"*** This pull request was opened by {pr_user}")
+    # sys.exit(78)
+    #
+    # print("*** This pull request is ready to be merged.")
     # merge_url = pull_request["url"] + "/merge"
     # sess.put(merge_url)
     #
